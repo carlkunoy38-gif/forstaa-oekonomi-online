@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forstå Økonomi - Cloud Version</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cloud-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 10px 0;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .disclaimer {
+            background: rgba(255, 235, 59, 0.1);
+            border: 1px solid rgba(255, 235, 59, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 30px;
+            text-align: center;
+            color: #795548;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Forstå Økonomi</h1>
+            <div class="cloud-badge">☁️ Cloud Version - Test Overalt!</div>
+            <p>Professionel økonomisk beregner - Nu tilgængelig online</p>
+        </div>
+
+        <div class="calculator-grid">
+            <!-- Moms Beregner -->
+            <div class="calculator-card">
+                <div class="card-title">💳 Moms Beregner</div>
+                <div class="input-group">
+                    <label>Beløb:</label>
+                    <input type="number" id="momsAmount" placeholder="Indtast beløb" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Beregningstype:</label>
+                    <select id="momsType">
+                        <option value="add">Tilføj moms (25%)</option>
+                        <option value="remove">Fjern moms (25%)</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="calculateMoms()">Beregn Moms</button>
+                <div class="result" id="momsResult">Indtast beløb og klik 'Beregn Moms'</div>
+            </div>
+
+            <!-- Lån Beregner -->
+            <div class="calculator-card">
+                <div class="card-title">🏠 Lån Beregner</div>
+                <div class="input-group">
+                    <label>Lånebeløb (kr):</label>
+                    <input type="number" id="loanAmount" placeholder="F.eks. 1000000" step="1000">
+                </div>
+                <div class="input-group">
+                    <label>Rente (% årlig):</label>
+                    <input type="number" id="loanRate" placeholder="F.eks. 4.5" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Løbetid (år):</label>
+                    <input type="number" id="loanYears" placeholder="F.eks. 30" step="1">
+                </div>
+                <button class="btn" onclick="calculateLoan()">Beregn Lån</button>
+                <div class="result" id="loanResult">Indtast låneoplysninger</div>
+            </div>
+
+            <!-- Investering Beregner -->
+            <div class="calculator-card">
+                <div class="card-title">📈 Investering Beregner</div>
+                <div class="input-group">
+                    <label>Startbeløb (kr):</label>
+                    <input type="number" id="investStart" placeholder="F.eks. 100000" step="1000">
+                </div>
+                <div class="input-group">
+                    <label>Månedlig opsparing (kr):</label>
+                    <input type="number" id="investMonthly" placeholder="F.eks. 5000" step="100">
+                </div>
+                <div class="input-group">
+                    <label>Forventet rente (% årlig):</label>
+                    <input type="number" id="investRate" placeholder="F.eks. 7" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Periode (år):</label>
+                    <input type="number" id="investYears" placeholder="F.eks. 20" step="1">
+                </div>
+                <button class="btn" onclick="calculateInvestment()">Beregn Investering</button>
+                <div class="result" id="investResult">Indtast investeringsoplysninger</div>
+            </div>
+
+            <!-- ROAS Beregner -->
+            <div class="calculator-card">
+                <div class="card-title">🎯 ROAS & Profit Beregner</div>
+                <div class="input-group">
+                    <label>Reklameudgifter (kr):</label>
+                    <input type="number" id="adSpend" placeholder="F.eks. 10000" step="100">
+                </div>
+                <div class="input-group">
+                    <label>Omsætning fra reklamer (kr):</label>
+                    <input type="number" id="revenue" placeholder="F.eks. 50000" step="100">
+                </div>
+                <div class="input-group">
+                    <label>Fortjenstmargen (%):</label>
+                    <input type="number" id="profitMargin" placeholder="F.eks. 30" step="1">
+                </div>
+                <button class="btn" onclick="calculateROAS()">Beregn ROAS</button>
+                <div class="result" id="roasResult">Indtast reklamedata</div>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            <strong>☁️ Cloud Test Version</strong><br>
+            Dette er en online test-version. Desktop-versionen indeholder AI-assistent og live data.
+        </div>
+    </div>
+
+    <script>
+        function formatNumber(num) {
+            return new Intl.NumberFormat('da-DK', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(num);
+        }
+
+        function calculateMoms() {
+            const amount = parseFloat(document.getElementById('momsAmount').value);
+            const type = document.getElementById('momsType').value;
+            const result = document.getElementById('momsResult');
+
+            if (!amount || amount <= 0) {
+                result.innerHTML = '❌ Indtast et gyldigt beløb';
+                return;
+            }
+
+            let moms, total;
+            if (type === 'add') {
+                moms = amount * 0.25;
+                total = amount + moms;
+                result.innerHTML = `<strong>Med moms: ${formatNumber(total)} kr</strong><br>Moms: ${formatNumber(moms)} kr`;
+            } else {
+                total = amount / 1.25;
+                moms = amount - total;
+                result.innerHTML = `<strong>Uden moms: ${formatNumber(total)} kr</strong><br>Moms: ${formatNumber(moms)} kr`;
+            }
+        }
+
+        function calculateLoan() {
+            const amount = parseFloat(document.getElementById('loanAmount').value);
+            const rate = parseFloat(document.getElementById('loanRate').value) / 100 / 12;
+            const years = parseFloat(document.getElementById('loanYears').value);
+            const result = document.getElementById('loanResult');
+
+            if (!amount || !rate || !years || amount <= 0 || years <= 0) {
+                result.innerHTML = '❌ Indtast gyldige låneoplysninger';
+                return;
+            }
+
+            const months = years * 12;
+            const monthlyPayment = (amount * rate * Math.pow(1 + rate, months)) / (Math.pow(1 + rate, months) - 1);
+            const totalPayment = monthlyPayment * months;
+
+            result.innerHTML = `<strong>Månedlig ydelse: ${formatNumber(monthlyPayment)} kr</strong><br>Total: ${formatNumber(totalPayment)} kr`;
+        }
+
+        function calculateInvestment() {
+            const startAmount = parseFloat(document.getElementById('investStart').value) || 0;
+            const monthlyAmount = parseFloat(document.getElementById('investMonthly').value) || 0;
+            const rate = parseFloat(document.getElementById('investRate').value) / 100 / 12;
+            const years = parseFloat(document.getElementById('investYears').value);
+            const result = document.getElementById('investResult');
+
+            if (!years || years <= 0) {
+                result.innerHTML = '❌ Indtast antal år';
+                return;
+            }
+
+            const months = years * 12;
+            let futureValue = startAmount * Math.pow(1 + rate, months);
+
+            if (monthlyAmount > 0) {
+                futureValue += monthlyAmount * ((Math.pow(1 + rate, months) - 1) / rate);
+            }
+
+            const totalInvested = startAmount + (monthlyAmount * months);
+            const profit = futureValue - totalInvested;
+
+            result.innerHTML = `<strong>Fremtidig værdi: ${formatNumber(futureValue)} kr</strong><br>Gevinst: ${formatNumber(profit)} kr`;
+        }
+
+        function calculateROAS() {
+            const adSpend = parseFloat(document.getElementById('adSpend').value);
+            const revenue = parseFloat(document.getElementById('revenue').value);
+            const margin = parseFloat(document.getElementById('profitMargin').value) / 100;
+            const result = document.getElementById('roasResult');
+
+            if (!adSpend || !revenue || adSpend <= 0 || revenue <= 0) {
+                result.innerHTML = '❌ Indtast gyldige reklamedata';
+                return;
+            }
+
+            const roas = revenue / adSpend;
+            const profit = revenue * margin;
+            const netProfit = profit - adSpend;
+
+            result.innerHTML = `<strong>ROAS: ${roas.toFixed(2)}:1</strong><br>Net profit: ${formatNumber(netProfit)} kr`;
+        }
+    </script>
+</body>
+</html>
